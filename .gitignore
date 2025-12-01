@@ -2,3 +2,5 @@ recording.mp3
 .vscode/
 pengu_speak.log
 pengu_speak.log
+confirm_recording.mp3
+__pycache__/

@@ -76,12 +76,34 @@ if 'search' in user_message or 'find' in user_message or 'google' in user_messag
     print(search_term)
     command = search_cmd(search_term)
 
-if 'shutdown' in user_message or 'power off' in user_message or 'shut down' in user_message:
-    logging.info('Processing shutdown command')
-    command = 'systemctl poweroff'
+if 'shutdown' in user_message or 'power off' in user_message or 'power of' in user_message or 'shut down' in user_message:
+    send_notification('you are about to shutdown you pc, are you sure?(say yes)')
+    recording = sounddevice.rec(int(duration * freq), samplerate=freq, channels=2)
+    sounddevice.wait(duration)
+    wavio.write(f"{Path(__file__).parent.resolve()}/confirm_recording.mp3", recording, freq, sampwidth=2)
+    logging.info('Successfully completed audio recording')
+
+    confirmMsg = model.transcribe(f"{Path(__file__).parent.resolve()}/confirm_recording.mp3")
+    if 'yes' in user_message:
+        logging.info('Processing shutdown command')
+        command = 'systemctl poweroff'
+    else:
+        send_notification('ok, wont shutdown')
+
 if 'restart' in user_message or 'reboot' in user_message:
-    logging.info('Processing restart command')
-    command = 'reboot'
+    send_notification('you are about to reboot you pc, are you sure?(say yes)')
+    recording = sounddevice.rec(int(duration * freq), samplerate=freq, channels=2)
+    sounddevice.wait(duration)
+    wavio.write(f"{Path(__file__).parent.resolve()}/confirm_recording.mp3", recording, freq, sampwidth=2)
+    logging.info('Successfully completed audio recording')
+
+    confirmMsg = model.transcribe(f"{Path(__file__).parent.resolve()}/confirm_recording.mp3")
+    if 'yes' in user_message:
+        logging.info('Processing restart command')
+        command = 'reboot'
+    else:
+        send_notification('ok, wont reboot')
+
 if 'lock' in user_message:
     logging.info('Processing lock command')
     command = 'loginctl lock-session'
