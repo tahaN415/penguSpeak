@@ -10,7 +10,7 @@ def get_command(action, x):
         'brightness_set': f'brightnessctl set {x}%',
         'brightness_up': f'brightnessctl set +{x}%',
         'brightness_down': f'brightnessctl set {x}%-',
-        'Display system information and hardware specifications': 'neofetch',
+        'Display system information and hardware specifications': 'fastfetch',
         'Print detailed system and kernel information': 'uname -a',
         'volume_set': f'pamixer --set-volume {x} --allow-boost',
         'volume_up': f'pamixer -i {x} --allow-boost',
