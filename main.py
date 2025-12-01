@@ -10,6 +10,8 @@ from functionss.generalFunctions import *
 from functionss.sound import *
 from functionss.brightness import *
 
+
+
 # Configure logging file
 logging.basicConfig(
     filename=f'{Path(__file__).parent.resolve()}/pengu_speak.log',
@@ -20,18 +22,19 @@ logging.basicConfig(
 
 freq = 44100
 duration = 7
+audio_file = f"{Path(__file__).parent.resolve()}/recording.mp3"
 
 print('Starting audio recording...')
 send_notification('listening...')
 logging.info('Initiating audio recording session')
 recording = sounddevice.rec(int(duration * freq), samplerate=freq, channels=2)
 sounddevice.wait(duration)
-wavio.write(f"{Path(__file__).parent.resolve()}/recording.mp3", recording, freq, sampwidth=2)
+wavio.write(audio_file, recording, freq, sampwidth=2)
 logging.info('Successfully completed audio recording')
 
 model = whisper.load_model(whisperModel)
 logging.info(f'Successfully loaded Whisper model: {whisperModel}')
-user_message = model.transcribe(f"{Path(__file__).parent.resolve()}/recording.mp3")["text"].lower().replace('.', '').replace('%', '')
+user_message = model.transcribe(audio_file)["text"].lower().replace('.', '').replace('%', '')
 logging.info(f'Successfully transcribed voice command: "{user_message}"')
 print(user_message)
 

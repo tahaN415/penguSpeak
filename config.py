@@ -6,8 +6,6 @@ tiny.en 	            ~1 GB 	        ~10x
 base.en 	            ~1 GB 	        ~7x
 small.en 	            ~2 GB 	        ~4x
 medium.en               ~5 GB 	        ~2x
-N/A    	                ~10 GB      	~1x
-N/A 	                ~6 GB 	        ~8x
 """
 
 
